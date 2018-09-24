@@ -152,10 +152,6 @@ class CapitalT(object):
 
         self.h_rect = rg.Rectangle(h_rect_upper_left, h_rect_lower_right)
         self.v_rect = rg.Rectangle(v_rect_upper_left, v_rect_lower_right)
-        self.intersection_center = intersection_center
-        self.width = width
-        self.height = height
-        self.letter_thickness = letter_thickness
 
         # --------------------------------------------------------------
         # DONE: 3.
@@ -279,7 +275,19 @@ class CapitalT(object):
         Type hints:
           :rtype: CapitalT
         """
-        return CapitalT(self.intersection_center, self.width, self.height, self.letter_thickness)
+        width = abs(self.h_rect.corner_1.x - self.h_rect.corner_2.x)
+        letter_thickness = abs(self.h_rect.corner_1.y - self.h_rect.corner_2.y)
+        height = abs(self.v_rect.corner_2.y - self.v_rect.corner_1.y)
+        intersection_center_x = 0.5 * (self.h_rect.corner_1.x + self.h_rect.corner_2.x)
+        intersection_center_y = 0.5 * (self.h_rect.corner_1.y + self.h_rect.corner_2.y)
+        intersection_center = rg.Point(intersection_center_x, intersection_center_y)
+        john = CapitalT(intersection_center, width, height, letter_thickness)
+        john.v_rect.fill_color = self.v_rect.fill_color
+        john.v_rect.outline_color = self.v_rect.outline_color
+        john.h_rect.fill_color = self.h_rect.fill_color
+        john.h_rect.outline_color = self.h_rect.outline_color
+        return john
+
         # --------------------------------------------------------------
         # TODO: 7.
         #   READ the above specification, including the Example.
